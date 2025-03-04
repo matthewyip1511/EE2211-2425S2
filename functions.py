@@ -9,7 +9,7 @@ def matrix_with_bias(*rows : list) -> np.ndarray:
     return np.array(list(map(lambda lst: [1] + lst, rows)))
 
 def is_invertible(X : np.ndarray) -> bool:
-    return np.linalg.det(X) != 0
+    return np.linalg.matrix_rank(X) == X.shape[0]
 
 def has_left_inverse(X : np.ndarray) -> bool:
     return is_invertible(X.T @ X)
