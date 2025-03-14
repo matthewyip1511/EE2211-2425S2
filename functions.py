@@ -1,6 +1,8 @@
 import numpy as np
 from numpy.linalg import inv
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import OneHotEncoder, PolynomialFeatures
+from sklearn.metrics import mean_squared_error
 
 def matrix(*rows : list) -> np.ndarray:
     return np.array(rows)
@@ -22,10 +24,27 @@ def get_left_inverse(X : np.ndarray) -> np.ndarray:
 
 def get_right_inverse(X : np.ndarray) -> np.ndarray:
     return X.T @ inv(X @ X.T)
+
+def one_hot_encode(X: np.ndarray) -> np.ndarray:
+    # Reshape y to be a 2D array
+    X = X.reshape(-1, 1)
+
+    # Initialize OneHotEncoder
+    encoder = OneHotEncoder(sparse_output=False)  # sparse=False returns a dense matrix
+
+    # Apply one-hot encoding to y
+    X = encoder.fit_transform(X)
+
+    return X
+
+def polynomial(X: np.ndarray, deg: int) -> np.ndarray:
+    pf = PolynomialFeatures(deg)
+
+    X = X.reshape(-1, 1)
+    X = pf.fit_transform(X)
+
+    return X
     
-if __name__ == "__main__":
-    import code
-    code.interact(local=globals())
 
 
 
