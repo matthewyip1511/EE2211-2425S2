@@ -40,12 +40,31 @@ def one_hot_encode(X: np.ndarray) -> np.ndarray:
 def polynomial(X: np.ndarray, deg: int) -> np.ndarray:
     pf = PolynomialFeatures(deg)
 
-    X = X.reshape(-1, 1)
     X = pf.fit_transform(X)
 
     return X
-    
 
+def rank(X: np.ndarray) -> int:
+    return np.linalg.matrix_rank(X)
 
+def inverse(X:np.ndarray) -> np.ndarray:
+    return np.linalg.inv(X)
+
+# not needed
+'''
+def P(X, y, order):
+    X = np.array([[1,0,1], [1,-1,1]])
+    y = np.array([0, 1])
+    ## Generate polynomial features
+    poly = PolynomialFeatures(order)
+    P = poly.fit_transform(X)
+    ## dual solution (without ridge)
+    w_dual = P.T @ inv(P @ P.T) @ y
+    print(w_dual)
+    ## primal ridge
+    reg_L = 0.0001*np.identity(P.shape[1])
+    w_primal_ridge = inv(P.T @ P + reg_L) @ P.T @ y
+    print(w_primal_ridge)
+'''
 
 
